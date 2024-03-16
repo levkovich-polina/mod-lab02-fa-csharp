@@ -63,17 +63,18 @@ namespace fans
         e.Transitions['1'] = e;
     }
         
-    public bool? Run(IEnumerable<char> s)
-    {
-        State current = InitialState;
-        foreach (var c in s) 
+   public bool? Run(IEnumerable<char> s)
         {
-            current = current.Transitions[c]; 
-            if (current == null)              
-                return null;
+            State current = InitialState;
+            foreach (var c in s) // цикл по всем символам 
+            {
+                current = current.Transitions[c]; // меняем состояние на то, в которое у нас переход
+                if (current == null)              // если его нет, возвращаем признак ошибки
+                    return null;
+                // иначе переходим к следующему
+            }
+            return current.IsAcceptState;         // результат true если в конце финальное состояние 
         }
-        return current.IsAcceptState;        
-    }
   }
 
   public class FA2
